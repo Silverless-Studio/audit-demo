@@ -39,3 +39,10 @@ Create `.env.local` with required variables, including:
 - `NEXT_PUBLIC_CONVEX_URL`
 - `NEXT_PUBLIC_CONVEX_SITE_URL`
 - `NEXT_PUBLIC_SITE_URL`
+- `GOOGLE_CLIENT_ID` (optional, enables Google auth)
+- `GOOGLE_CLIENT_SECRET` (optional, enables Google auth)
+
+If Google auth is enabled, add this redirect URI in Google Cloud OAuth:
+
+- `http://localhost:3000/api/auth/callback/google` (local)
+- `https://<your-domain>/api/auth/callback/google` (production)
