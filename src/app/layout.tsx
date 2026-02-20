@@ -1,41 +1,46 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { ConvexClientProvider } from "@/app/ConvexClientProvider";
-import { getToken } from "@/lib/auth-server";
+import { ThemeProvider } from "@/components/next-theme/theme-provider";
+import { Footer } from "@/components/footer";
 
-const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-sans'});
+import { ConvexClientProvider } from "./ConvexClientProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"]
+})
 
 export const metadata: Metadata = {
-  title: "Audit Platform",
-  description: "Role-based auditing platform with Convex and BetterAuth",
+  title: "Nextjs with convex",
+  description: "First templete by Podalls",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const initialToken = await getToken().catch(() => null);
-
   return (
-    <html lang="en" className={jetbrainsMono.variable}>
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} min-h-[calc(100vh-2rem)] flex flex-col gap-4 antialiased`}
       >
-        <ConvexClientProvider initialToken={initialToken}>
-          {children}
-        </ConvexClientProvider>
+         <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ConvexClientProvider>
+            <main className=" px-2 md:px-4 grow flex flex-col">
+            
+              {children}
+            </main>
+            <Footer />
+            </ConvexClientProvider>
+            
+          </ThemeProvider>
       </body>
     </html>
   );
