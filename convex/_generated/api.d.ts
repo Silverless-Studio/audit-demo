@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as audits from "../audits.js";
 import type * as auth from "../auth.js";
 import type * as email from "../email.js";
 import type * as emails_components_BaseEmail from "../emails/components/BaseEmail.js";
@@ -16,6 +17,7 @@ import type * as emails_resetPassword from "../emails/resetPassword.js";
 import type * as emails_verifyEmail from "../emails/verifyEmail.js";
 import type * as emails_verifyOTP from "../emails/verifyOTP.js";
 import type * as http from "../http.js";
+import type * as templates from "../templates.js";
 import type * as users from "../users.js";
 import type * as util from "../util.js";
 
@@ -26,6 +28,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  audits: typeof audits;
   auth: typeof auth;
   email: typeof email;
   "emails/components/BaseEmail": typeof emails_components_BaseEmail;
@@ -34,6 +37,7 @@ declare const fullApi: ApiFromModules<{
   "emails/verifyEmail": typeof emails_verifyEmail;
   "emails/verifyOTP": typeof emails_verifyOTP;
   http: typeof http;
+  templates: typeof templates;
   users: typeof users;
   util: typeof util;
 }>;

@@ -1,12 +1,29 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { getSessionCookie } from "better-auth/cookies";
-import { createAuth } from "./lib/auth";
+﻿import { betterFetch } from "@better-fetch/fetch";
 import { NextRequest, NextResponse } from "next/server";
-import { betterFetch } from "@better-fetch/fetch";
+import { AuthSession } from "@/lib/auth-client";
 
-type Session = ReturnType<typeof createAuth>["$Infer"]["Session"];
+const publicRoutes = ["/login"];
+
+const routeRoleRequirements: Array<{
+  prefix: string;
+  roles: Array<"auditor" | "manager" | "admin">;
+}> = [
+  {
+    prefix: "/audits",
+    roles: ["auditor", "admin"],
+  },
+  {
+    prefix: "/reviews",
+    roles: ["manager", "admin"],
+  },
+  {
+    prefix: "/admin",
+    roles: ["admin"],
+  },
+];
+
 const getSession = async (request: NextRequest) => {
-  const { data: session } = await betterFetch<Session>(
+  const { data: session } = await betterFetch<AuthSession>(
     "/api/auth/get-session",
     {
       baseURL: request.nextUrl.origin,
@@ -16,37 +33,62 @@ const getSession = async (request: NextRequest) => {
       },
     },
   );
+
   return session;
 };
 
-const signInRoutes = ["/sign-in", "/sign-up", "/verify-2fa", "/reset-password"];
+const getRole = async (request: NextRequest) => {
+  const response = await fetch(`${request.nextUrl.origin}/api/authz/role`, {
+    headers: {
+      cookie: request.headers.get("cookie") ?? "",
+      origin: request.nextUrl.origin,
+    },
+  });
 
-// Just check cookie, recommended approach
+  if (!response.ok) {
+    return null;
+  }
+
+  const data = (await response.json()) as {
+    role: "auditor" | "manager" | "admin" | null;
+  };
+
+  return data.role;
+};
+
 export default async function proxy(request: NextRequest) {
-  const sessionCookie = getSessionCookie(request);
-  // Uncomment to fetch the session (not recommended)
-  // const session = await getSession(request);
+  const { pathname } = request.nextUrl;
+  const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
 
-  const isSignInRoute = signInRoutes.includes(request.nextUrl.pathname);
+  const session = await getSession(request);
+  if (!session) {
+    if (isPublicRoute) {
+      return NextResponse.next();
+    }
 
-  if (isSignInRoute && !sessionCookie) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  if (pathname === "/" || isPublicRoute) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  const matchedRequirement = routeRoleRequirements.find((requirement) =>
+    pathname.startsWith(requirement.prefix),
+  );
+
+  if (!matchedRequirement) {
     return NextResponse.next();
   }
 
-  if (!isSignInRoute && !sessionCookie) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
-  }
-
-  if (isSignInRoute || request.nextUrl.pathname === "/") {
-    return NextResponse.redirect(
-      new URL("/dashboard", request.url),
-    );
+  const role = await getRole(request);
+  if (!role || !matchedRequirement.roles.includes(role)) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  // Run middleware on all routes except static assets and api routes
-  matcher: ["/((?!.*\\..*|_next|api/auth).*)", "/", "/trpc(.*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)"],
 };
