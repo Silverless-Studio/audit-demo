@@ -16,8 +16,8 @@ export default function DashboardPage() {
     label: string;
     roles: Array<"auditor" | "manager" | "admin">;
   }> = [
-    { href: "/audits", label: "Audits", roles: ["auditor", "admin"] },
-    { href: "/reviews", label: "Reviews", roles: ["manager", "admin"] },
+    { href: "/audits", label: "Engagements", roles: ["auditor", "admin"] },
+    { href: "/reviews", label: "Completion", roles: ["manager", "admin"] },
     { href: "/admin", label: "Admin", roles: ["admin"] },
   ];
 

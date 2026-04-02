@@ -18,17 +18,17 @@ type AppShellProps = {
 const roleLinks: Record<"auditor" | "manager" | "admin", Array<{ href: string; label: string }>> = {
   auditor: [
     { href: "/dashboard", label: "Dashboard" },
-    { href: "/audits", label: "My Audits" },
+    { href: "/audits", label: "My Engagements" },
     { href: "/audits/new", label: "Start Audit" },
   ],
   manager: [
     { href: "/dashboard", label: "Dashboard" },
-    { href: "/reviews", label: "Review Queue" },
+    { href: "/reviews", label: "Completion" },
   ],
   admin: [
     { href: "/dashboard", label: "Dashboard" },
-    { href: "/audits", label: "Audits" },
-    { href: "/reviews", label: "Reviews" },
+    { href: "/audits", label: "Engagements" },
+    { href: "/reviews", label: "Completion" },
     { href: "/admin", label: "Admin" },
   ],
 };
