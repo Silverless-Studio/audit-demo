@@ -22,7 +22,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <AppShell title="Dashboard" subtitle="Audit platform overview">
+    <AppShell title="Dashboard" subtitle="Kudos Assure overview">
       <div className="grid gap-4 md:grid-cols-2">
         {summary ? (
           Object.entries(summary).map(([key, value]) => (

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -27,7 +27,7 @@ export default function NewAuditPage() {
   };
 
   return (
-    <AppShell title="Start Audit" subtitle="Choose a published template.">
+    <AppShell title="Start Engagement" subtitle="Choose a published template.">
       <RoleGuard allowed={["auditor", "admin"]}>
         <div className="grid gap-3">
           {(templates ?? []).map((template) => (

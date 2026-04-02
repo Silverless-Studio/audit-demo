@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useQuery } from "convex/react";
@@ -13,7 +13,7 @@ export default function ReviewsPage() {
   const audits = useQuery(api.audits.listReviewAudits);
 
   return (
-    <AppShell title="Review Queue" subtitle="Submitted audits requiring manager action.">
+    <AppShell title="Completions" subtitle="Engagements prepared for sign off action.">
       <RoleGuard allowed={["manager", "admin"]}>
         <div className="grid gap-3">
           {(audits ?? []).map((audit) => (
@@ -37,7 +37,7 @@ export default function ReviewsPage() {
           {audits && audits.length === 0 ? (
             <Card>
               <CardContent className="pt-6 text-sm text-muted-foreground">
-                No audits in the review queue.
+                No engagements in the review queue.
               </CardContent>
             </Card>
           ) : null}

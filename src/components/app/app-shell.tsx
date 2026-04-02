@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -19,7 +19,7 @@ const roleLinks: Record<"auditor" | "manager" | "admin", Array<{ href: string; l
   auditor: [
     { href: "/dashboard", label: "Dashboard" },
     { href: "/audits", label: "My Engagements" },
-    { href: "/audits/new", label: "Start Audit" },
+    { href: "/audits/new", label: "Start Engagement" },
   ],
   manager: [
     { href: "/dashboard", label: "Dashboard" },

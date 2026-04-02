@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "next/navigation";
@@ -137,7 +137,7 @@ export default function AuditDetailPage() {
 
     try {
       await submitAudit({ auditId: details.audit._id });
-      setMessage("Audit submitted");
+      setMessage("Engagement submitted");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Submission failed");
     } finally {
@@ -146,11 +146,11 @@ export default function AuditDetailPage() {
   };
 
   return (
-    <AppShell title="Audit" subtitle="Answer by section with autosave enabled.">
+    <AppShell title="Engagement" subtitle="Answer by section with autosave enabled.">
       <RoleGuard allowed={["auditor", "manager", "admin"]}>
         {!details ? (
           <Card>
-            <CardContent className="pt-6 text-sm text-muted-foreground">Loading audit...</CardContent>
+            <CardContent className="pt-6 text-sm text-muted-foreground">Loading engagement...</CardContent>
           </Card>
         ) : (
           <div className="space-y-4">
@@ -301,7 +301,7 @@ export default function AuditDetailPage() {
                 onClick={submit}
                 disabled={!details.permissions.canSubmit || submitting}
               >
-                {submitting ? "Submitting..." : "Submit audit"}
+                {submitting ? "Submitting..." : "Submit engagement"}
               </Button>
             ) : null}
           </div>

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -63,7 +63,7 @@ export default function LoginPage() {
           <CardTitle>{mode === "login" ? "Login" : "Create account"}</CardTitle>
           <CardDescription>
             {mode === "login"
-              ? "Sign in to the audit platform."
+              ? "Sign in to the engagement platform."
               : "Create your account. New users default to auditor role."}
           </CardDescription>
         </CardHeader>

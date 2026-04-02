@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -35,7 +35,7 @@ export default function AdminTemplatesPage() {
   };
 
   return (
-    <AppShell title="Templates" subtitle="Create, version, and publish audit templates.">
+    <AppShell title="Templates" subtitle="Create, version, and publish engagement templates.">
       <RoleGuard allowed={["admin"]}>
         <Card>
           <CardHeader>
@@ -57,7 +57,7 @@ export default function AdminTemplatesPage() {
                 id="template-description"
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
-                placeholder="Audit scope and instructions"
+                placeholder="Engagement scope and instructions"
               />
             </div>
             <Button

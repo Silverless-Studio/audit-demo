@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -80,7 +80,7 @@ export default function ReviewDetailPage() {
   };
 
   return (
-    <AppShell title="Audit Review" subtitle="Read-only answers with manager decisions.">
+    <AppShell title="Engagement Review" subtitle="Read-only answers with manager decisions.">
       <RoleGuard allowed={["manager", "admin"]}>
         {!details ? (
           <Card>

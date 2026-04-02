@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useQuery } from "convex/react";
@@ -13,11 +13,11 @@ export default function AuditsPage() {
   const audits = useQuery(api.audits.listMyAudits);
 
   return (
-    <AppShell title="Audits" subtitle="Track your audit drafts and submissions.">
+    <AppShell title="Engagements" subtitle="All of your engagement drafts and submissions.">
       <RoleGuard allowed={["auditor", "admin"]}>
         <div className="mb-4">
           <Button asChild>
-            <Link href="/audits/new">Start new audit</Link>
+            <Link href="/audits/new">Start new engagement</Link>
           </Button>
         </div>
         <div className="grid gap-3">
@@ -42,7 +42,7 @@ export default function AuditsPage() {
           {audits && audits.length === 0 ? (
             <Card>
               <CardContent className="pt-6 text-sm text-muted-foreground">
-                No audits yet.
+                No engagements yet.
               </CardContent>
             </Card>
           ) : null}

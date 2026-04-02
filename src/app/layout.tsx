@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/next-theme/theme-provider";
@@ -10,8 +10,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Audit Demo",
-  description: "Production-style auditing platform proof of concept",
+  title: "Engagement Demo",
+  description: "Production-style engagement platform proof of concept",
 };
 
 export default function RootLayout({
