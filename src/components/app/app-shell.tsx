@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "convex/react";
+import { useConvexAuth, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
@@ -35,6 +35,7 @@ const roleLinks: Record<"auditor" | "manager" | "admin", Array<{ href: string; l
 
 export function AppShell({ title, subtitle, children }: AppShellProps) {
   const router = useRouter();
+  const { isLoading: authLoading } = useConvexAuth();
   const user = useQuery(api.auth.getCurrentUser);
   const [signingOut, setSigningOut] = useState(false);
 
@@ -57,7 +58,7 @@ export function AppShell({ title, subtitle, children }: AppShellProps) {
     });
   };
 
-  if (user === undefined) {
+  if (authLoading || user === undefined) {
     return <div className="p-6 text-sm text-muted-foreground">Loading session...</div>;
   }
 

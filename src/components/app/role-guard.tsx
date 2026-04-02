@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useQuery } from "convex/react";
+import { useConvexAuth, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -13,9 +13,10 @@ export function RoleGuard({
   allowed: Role[];
   children: React.ReactNode;
 }) {
+  const { isLoading: authLoading } = useConvexAuth();
   const user = useQuery(api.auth.getCurrentUser);
 
-  if (user === undefined) {
+  if (authLoading || user === undefined) {
     return <p className="text-sm text-muted-foreground">Checking access...</p>;
   }
 
